@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector } from "react-redux";
+import "./App.css";
+import AddArticle from "./components/AddArticle";
+import ArticleList from "./components/ArticleList";
+import { IArticle, IArticleState } from "./store/type";
 
 function App() {
+
+  const articles: IArticle[] = useSelector((state: IArticleState) => state.articles);
+  console.log(`articles: ${JSON.stringify(articles)}`);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Redux Article App</h1>
+      <AddArticle />
+
+      {articles.map(article => (
+        <ArticleList
+          key={article.id}
+          article={article} />
+      ))}
+
     </div>
   );
 }
